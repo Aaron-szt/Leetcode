@@ -1,0 +1,19 @@
+input = "dir\n\tsubdir1\n\t\tfile1.ext\n\t\tsubsubdir1\n\tsubdir2\n\t\tsubsubdir2\n\t\t\tfile2.ext"
+preinput = input.split('\n')
+print(preinput)
+ans = []
+num = 0
+def DFS(temp, level, now):
+	if preinput[now][level : 1 + level] != '\t':
+		ans.append([])
+		ans[-1] += temp
+		num = now-1
+	else:
+		temp.append(preinput[now])
+		DFS(temp, level + 1, now + 1)
+		temp.pop()
+	print(temp)
+	preinput.pop(num)
+while preinput:
+	DFS([str(preinput[0])], 0, 1)
+print(ans)

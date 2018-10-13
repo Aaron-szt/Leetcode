@@ -6,48 +6,54 @@
 #         self.right = None
 
 # dfs + stack
-class Solution(object):
+class Solution:
     def binaryTreePaths(self, root):
         if not root:
             return []
-        res, stack = [], [(root,"")]
+        ans = []
+        stack = [(root, "")]
         while stack:
             node, ls = stack.pop()
             if not node.left and not node.right:
-                res.append(ls + str(node.val))
-            if node.right:
-                stack.append((node.right, ls + str(node.val) + "->"))
+                ans.append(ls + str(node.val))
             if node.left:
-                stack.append((node.left, ls + str(node.val) + "->"))
-        return res
+                stack.append((node.left, ls + str(node.val) + '->'))
+            if node.right:
+                stack.append((node.right, ls + str(node.val) + '->'))
+        
+        return ans
     
 # bfs + queue
-def binaryTreePaths2(self, root):
-    if not root:
-        return []
-    res, queue = [], collections.deque([(root, "")])
-    while queue:
-        node, ls = queue.popleft()
-        if not node.left and not node.right:
-            res.append(ls+str(node.val))
-        if node.left:
-            queue.append((node.left, ls+str(node.val)+"->"))
-        if node.right:
-            queue.append((node.right, ls+str(node.val)+"->"))
-    return res
+class Solution:
+    def binaryTreePaths(self, root):
+        if not root:
+            return []
+        ans = []
+        queue = collections.deque([(root, "")])
+        while queue:
+            node, ls = queue.popleft()
+            if not node.left and not node.right:
+                ans.append(ls + str(node.val))
+            if node.left:
+                queue.append((node.left, ls + str(node.val) + '->'))
+            if node.right:
+                queue.append((node.right, ls + str(node.val) + '->'))
+        
+        return ans
     
 # dfs recursively
-def binaryTreePaths(self, root):
-    if not root:
-        return []
-    res = []
-    self.dfs(root, "", res)
-    return res
-
-def dfs(self, root, ls, res):
-    if not root.left and not root.right:
-        res.append(ls+str(root.val))
-    if root.left:
-        self.dfs(root.left, ls+str(root.val)+"->", res)
-    if root.right:
-        self.dfs(root.right, ls+str(root.val)+"->", res)
+class Solution:
+    def binaryTreePaths(self, root):
+        ans = []
+        s = ''
+        def paths(p, s, ans):           
+            if not p.left and not p.right:
+                ans.append(s + str(p.val))
+            if p.left:
+                paths(p.left, s + str(p.val) +'->', ans)
+            if p.right:
+                paths(p.right, s + str(p.val) +'->', ans)
+            
+        if root:        
+            paths(root, s, ans)
+        return ans
